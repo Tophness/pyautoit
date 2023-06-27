@@ -6,7 +6,7 @@ from ctypes.wintypes import *
 import ctypes
 
 @api.check(2, 'send click message failed')
-def ControlClick(title, text, control, button="left", clicks=1, x="center", y="center"):
+def ControlClick(title, text, control, button="left", clicks=1, x=-1, y=-1):
     """
 
     :param title:
@@ -22,7 +22,7 @@ def ControlClick(title, text, control, button="left", clicks=1, x="center", y="c
     return ret
 
 @api.check(2, 'send click message failed')
-def ControlClickByHandle(hwnd, h_ctrl, button="left", clicks=1, x="center", y="center"):
+def ControlClickByHandle(hwnd, h_ctrl, button="left", clicks=1, x=-1, y=-1):
     """
 
     :param handle:
