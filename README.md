@@ -1,14 +1,14 @@
 PyAutoIt
 ========
 
-Python binding for AutoItX3.dll
+Python binding for AutoItX3.dll with native Autoit naming scheme
 
 ### Installing
 
 If you have pip on your system, you can simply install or upgrade PyAutoIt:
 
 ```python
-pip install -U pyautoit
+pip install -U git+https://github.com/Tophness/pyautoit
 ```
 
 Alternately, you can download the source distribution from PyPI, unarchive it, and run:
@@ -26,9 +26,9 @@ python setup.py install
 ```python
 import autoit
 
-autoit.run("notepad.exe")
-autoit.win_wait_active("[CLASS:Notepad]", 3)
-autoit.control_send("[CLASS:Notepad]", "Edit1", "hello world{!}")
-autoit.win_close("[CLASS:Notepad]")
-autoit.control_click("[Class:#32770]", "Button2")
+autoit.Run("notepad.exe")
+autoit.WinWaitActive("[CLASS:Notepad]", "", 3)
+autoit.ControlSend("[CLASS:Notepad]", "", "Edit1", "hello world{!}")
+autoit.WinClose("[CLASS:Notepad]")
+autoit.ControlClick("[Class:#32770]", "", "Button2")
 ```
