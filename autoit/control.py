@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'Jace Xu'
-
 from .autoit import INTDEFAULT, AUTO_IT
 from .autoit import api
 from ctypes.wintypes import *
 import ctypes
 
-
-@api.check(2, "send click message failed")
-def control_click(title, control, **kwargs):
+@api.check(2, 'send click message failed')
+def ControlClick(title, text, control, button="left", clicks=1, x="center", y="center"):
     """
 
     :param title:
@@ -21,39 +18,22 @@ def control_click(title, control, **kwargs):
     :param y:
     :return:
     """
-    text = kwargs.get("text", "")
-    button = kwargs.get("button", "left")
-    clicks = kwargs.get("clicks", 1)
-    x = kwargs.get("x", INTDEFAULT)
-    y = kwargs.get("y", INTDEFAULT)
-
-    ret = AUTO_IT.AU3_ControlClick(LPCWSTR(title), LPCWSTR(text),
-                                   LPCWSTR(control), LPCWSTR(button),
-                                   INT(clicks), INT(x), INT(y))
+    ret = AUTO_IT.AU3_ControlClick(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(button), INT(clicks), INT(x), INT(y))
     return ret
 
-
-@api.check(2, "send click message failed")
-def control_click_by_handle(hwnd, h_ctrl, **kwargs):
+@api.check(2, 'send click message failed')
+def ControlClickByHandle(hwnd, h_ctrl, button="left", clicks=1, x="center", y="center"):
     """
 
     :param handle:
     :param kwargs:
     :return:
     """
-    button = kwargs.get("button", "left")
-    clicks = kwargs.get("clicks", 1)
-    x = kwargs.get("x", INTDEFAULT)
-    y = kwargs.get("y", INTDEFAULT)
-
-    ret = AUTO_IT.AU3_ControlClickByHandle(HWND(hwnd), HWND(h_ctrl),
-                                           LPCWSTR(button), INT(clicks),
-                                           INT(x), INT(y))
+    ret = AUTO_IT.AU3_ControlClickByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(button), INT(clicks), INT(x), INT(y))
     return ret
 
-
-@api.check(1, "no window match the criteria")
-def control_command(title, control, command, buf_size=256, **kwargs):
+@api.check(1, 'no window match the criteria')
+def ControlCommand(title, text, control, command, extra="", buf_size=256):
     """
 
     :param title:
@@ -63,18 +43,12 @@ def control_command(title, control, command, buf_size=256, **kwargs):
     :param buf_size:
     :return:
     """
-    text = kwargs.get("text", "")
-    extra = kwargs.get("extra", "")
     result = ctypes.create_unicode_buffer(buf_size)
-    AUTO_IT.AU3_ControlCommand(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-                               LPCWSTR(command), LPCWSTR(extra),
-                               result, INT(buf_size))
-
+    AUTO_IT.AU3_ControlCommand(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(command), LPCWSTR(extra), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(1, "no window match the criteria")
-def control_command_by_handle(hwnd, h_ctrl, command, buf_size=256, **kwargs):
+@api.check(1, 'no window match the criteria')
+def ControlCommandByHandle(hwnd, h_ctrl, command, extra="", buf_size=256):
     """
 
     :param hwnd:
@@ -83,17 +57,12 @@ def control_command_by_handle(hwnd, h_ctrl, command, buf_size=256, **kwargs):
     :param kwargs:
     :return:
     """
-    extra = kwargs.get("extra", "")
     result = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlCommandByHandle(
-        HWND(hwnd), HWND(h_ctrl), LPCWSTR(command), LPCWSTR(extra), result,
-        INT(buf_size))
+    AUTO_IT.AU3_ControlCommandByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(command), LPCWSTR(extra), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_list_view(title, control, command, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlListView(title, text, control, command, extra1="", extra2="", buf_size=256):
     """
 
     :param title:
@@ -103,21 +72,12 @@ def control_list_view(title, control, command, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-    buf_size = kwargs.get("buf_size", 256)
     result = ctypes.create_unicode_buffer(buf_size)
-    extra1 = kwargs.get("extras1", "")
-    extra2 = kwargs.get("extras2", "")
-
-    AUTO_IT.AU3_ControlListView(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(command),
-        LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size)
-    )
+    AUTO_IT.AU3_ControlListView(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(command), LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_list_view_by_handle(hwnd, h_ctrl, command, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlListViewByHandle(hwnd, h_ctrl, command, extra1="", extra2="", buf_size=256):
     """
 
     :param hwnd:
@@ -126,20 +86,12 @@ def control_list_view_by_handle(hwnd, h_ctrl, command, **kwargs):
     :param kwargs:
     :return:
     """
-    extra1 = kwargs.get("extra1", "")
-    extra2 = kwargs.get("extra2", "")
-    buf_size = kwargs.get("buf_size", 256)
     result = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlListViewByHandle(
-        HWND(hwnd), HWND(h_ctrl), LPCWSTR(command),
-        LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size)
-    )
+    AUTO_IT.AU3_ControlListViewByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(command), LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(2, "Window/Control could not be found")
-def control_disable(title, control, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlDisable(title, text, control):
     """
 
     :param title:
@@ -147,15 +99,11 @@ def control_disable(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlDisable(LPCWSTR(title), LPCWSTR(text),
-                                     LPCWSTR(control))
+    ret = AUTO_IT.AU3_ControlDisable(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_disable_by_handle(hwnd, h_ctrl):
+@api.check(2, 'Window/Control could not be found')
+def ControlDisableByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -165,9 +113,8 @@ def control_disable_by_handle(hwnd, h_ctrl):
     ret = AUTO_IT.AU3_ControlDisableByHandle(HWND(hwnd), HWND(h_ctrl))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_enable(title, control, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlEnable(title, text, control):
     """
 
     :param title:
@@ -175,15 +122,11 @@ def control_enable(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlEnable(LPCWSTR(title), LPCWSTR(text),
-                                    LPCWSTR(control))
+    ret = AUTO_IT.AU3_ControlEnable(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_enable_by_handle(hwnd, h_ctrl):
+@api.check(2, 'Window/Control could not be found')
+def ControlEnableByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -193,9 +136,8 @@ def control_enable_by_handle(hwnd, h_ctrl):
     ret = AUTO_IT.AU3_ControlEnableByHandle(HWND(hwnd), HWND(h_ctrl))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_focus(title, control, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlFocus(title, text, control):
     """
 
     :param title:
@@ -203,15 +145,11 @@ def control_focus(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlFocus(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
+    ret = AUTO_IT.AU3_ControlFocus(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_focus_by_handle(hwnd, h_ctrl):
+@api.check(2, 'Window/Control could not be found')
+def ControlFocusByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -221,26 +159,20 @@ def control_focus_by_handle(hwnd, h_ctrl):
     ret = AUTO_IT.AU3_ControlFocusByHandle(HWND(hwnd), HWND(h_ctrl))
     return ret
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_focus(title, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetFocus(title, text, buf_size=256):
     """
 
     :param title:
     :param kwargs:
     :return:
     """
-    buf_size = kwargs.get("buf_size", 256)
-    text = kwargs.get("text", "")
     ctrl_with_focus = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlGetFocus(
-        LPCWSTR(title), LPCWSTR(text), ctrl_with_focus, INT(buf_size))
+    AUTO_IT.AU3_ControlGetFocus(LPCWSTR(title), LPCWSTR(text), ctrl_with_focus, INT(buf_size))
     return ctrl_with_focus.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_focus_by_handle(hwnd, buf_size=256):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetFocusByHandle(hwnd, buf_size=256):
     """
 
     :param hwnd:
@@ -248,14 +180,11 @@ def control_get_focus_by_handle(hwnd, buf_size=256):
     :return:
     """
     ctrl_with_focus = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlGetFocusByHandle(HWND(hwnd), ctrl_with_focus,
-                                        INT(buf_size))
+    AUTO_IT.AU3_ControlGetFocusByHandle(HWND(hwnd), ctrl_with_focus, INT(buf_size))
     return ctrl_with_focus.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_handle(hwnd, control):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetHandle(hwnd, control):
     """
 
     :param hwnd:
@@ -265,9 +194,8 @@ def control_get_handle(hwnd, control):
     ret = AUTO_IT.AU3_ControlGetHandle(HWND(hwnd), LPCWSTR(control))
     return ret
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_handle_as_text(title, control, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetHandleAsText(title, text, control, buf_size=256):
     """
 
     :param title:
@@ -275,19 +203,12 @@ def control_get_handle_as_text(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-    buf_size = kwargs.get("buf_size", 32)
     ret_text = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlGetHandleAsText(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-        ret_text, INT(buf_size)
-    )
+    AUTO_IT.AU3_ControlGetHandleAsText(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), ret_text, INT(buf_size))
     return ret_text.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_pos(title, control, text=""):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetPos(title, text, control):
     """
 
     :param title:
@@ -296,16 +217,11 @@ def control_get_pos(title, control, text=""):
     :return:
     """
     rect = RECT()
+    AUTO_IT.AU3_ControlGetPos(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), ctypes.byref(rect))
+    return (rect.left, rect.top, rect.right, rect.bottom)
 
-    AUTO_IT.AU3_ControlGetPos(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-        ctypes.byref(rect)
-    )
-    return rect.left, rect.top, rect.right, rect.bottom
-
-
-@api.check(1, "Window/Control could not be found")
-def control_get_pos_by_handle(hwnd, h_ctrl):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetPosByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -313,14 +229,11 @@ def control_get_pos_by_handle(hwnd, h_ctrl):
     :return:
     """
     rect = RECT()
+    AUTO_IT.AU3_ControlGetPosByHandle(HWND(hwnd), HWND(h_ctrl), ctypes.byref(rect))
+    return (rect.left, rect.top, rect.right, rect.bottom)
 
-    AUTO_IT.AU3_ControlGetPosByHandle(HWND(hwnd), HWND(h_ctrl),
-                                      ctypes.byref(rect))
-    return rect.left, rect.top, rect.right, rect.bottom
-
-
-@api.check(1, "Window/Control could not be found")
-def control_get_text(title, control, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetText(title, text, control, buf_size=256):
     """
 
     :param title:
@@ -328,38 +241,24 @@ def control_get_text(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-    buf_size = kwargs.get("buf_size", 256)
     ctrl_text = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlGetText(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-        ctrl_text, INT(buf_size)
-    )
-
+    AUTO_IT.AU3_ControlGetText(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), ctrl_text, INT(buf_size))
     return ctrl_text.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_get_text_by_handle(hwnd, h_ctrl, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlGetTextByHandle(hwnd, h_ctrl, buf_size=256):
     """
 
     :param hwnd:
     :param h_ctrl:
     :return:
     """
-    buf_size = kwargs.get("buf_size", 256)
     ctrl_text = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlGetTextByHandle(
-        HWND(hwnd), HWND(h_ctrl), ctrl_text, INT(buf_size)
-    )
-
+    AUTO_IT.AU3_ControlGetTextByHandle(HWND(hwnd), HWND(h_ctrl), ctrl_text, INT(buf_size))
     return ctrl_text.value.rstrip()
 
-
-@api.check(2, "Window/Control could not be found")
-def control_hide(title, control, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlHide(title, text, control):
     """
 
     :param title:
@@ -367,15 +266,11 @@ def control_hide(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlHide(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
+    ret = AUTO_IT.AU3_ControlHide(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_hide_by_handle(hwnd, h_ctrl):
+@api.check(2, 'Window/Control could not be found')
+def ControlHideByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -385,9 +280,8 @@ def control_hide_by_handle(hwnd, h_ctrl):
     ret = AUTO_IT.AU3_ControlHideByHandle(HWND(hwnd), HWND(h_ctrl))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_move(title, control, x, y, width=-1, height=-1, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlMove(title, text, control, x, y, width=-1, height=-1):
     """
 
     :param title:
@@ -397,17 +291,11 @@ def control_move(title, control, x, y, width=-1, height=-1, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlMove(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-        INT(x), INT(y), INT(width), INT(height)
-    )
+    ret = AUTO_IT.AU3_ControlMove(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), INT(x), INT(y), INT(width), INT(height))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_move_by_handle(hwnd, h_ctrl, x, y, width=-1, height=-1):
+@api.check(2, 'Window/Control could not be found')
+def ControlMoveByHandle(hwnd, h_ctrl, x, y, width=-1, height=-1):
     """
 
     :param hwnd:
@@ -418,14 +306,11 @@ def control_move_by_handle(hwnd, h_ctrl, x, y, width=-1, height=-1):
     :param height:
     :return:
     """
-    ret = AUTO_IT.AU3_ControlMoveByHandle(
-        HWND(hwnd), HWND(h_ctrl), INT(x), INT(y), INT(width), INT(height)
-    )
+    ret = AUTO_IT.AU3_ControlMoveByHandle(HWND(hwnd), HWND(h_ctrl), INT(x), INT(y), INT(width), INT(height))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_send(title, control, send_text, mode=0, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlSend(title, text, control, send_text, mode=0):
     """
 
     :param title:
@@ -438,17 +323,11 @@ def control_send(title, control, send_text, mode=0, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlSend(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control),
-        LPCWSTR(send_text), INT(mode)
-    )
+    ret = AUTO_IT.AU3_ControlSend(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(send_text), INT(mode))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_send_by_handle(hwnd, h_ctrl, send_text, mode=0):
+@api.check(2, 'Window/Control could not be found')
+def ControlSendByHandle(hwnd, h_ctrl, send_text, mode=0):
     """
 
     :param hwnd:
@@ -457,15 +336,11 @@ def control_send_by_handle(hwnd, h_ctrl, send_text, mode=0):
     :param mode:
     :return:
     """
-
-    ret = AUTO_IT.AU3_ControlSendByHandle(
-        HWND(hwnd), HWND(h_ctrl), LPCWSTR(send_text), INT(mode)
-    )
+    ret = AUTO_IT.AU3_ControlSendByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(send_text), INT(mode))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_set_text(title, control, control_text, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlSetText(title, text, control, control_text):
     """
 
     :param title:
@@ -474,16 +349,11 @@ def control_set_text(title, control, control_text, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlSetText(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(control_text)
-    )
+    ret = AUTO_IT.AU3_ControlSetText(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(control_text))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_set_text_by_handle(hwnd, h_ctrl, control_text):
+@api.check(2, 'Window/Control could not be found')
+def ControlSetTextByHandle(hwnd, h_ctrl, control_text):
     """
 
     :param hwnd:
@@ -491,14 +361,11 @@ def control_set_text_by_handle(hwnd, h_ctrl, control_text):
     :param control_text:
     :return:
     """
-    ret = AUTO_IT.AU3_ControlSetTextByHandle(
-        HWND(hwnd), HWND(h_ctrl), LPCWSTR(control_text)
-    )
+    ret = AUTO_IT.AU3_ControlSetTextByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(control_text))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_show(title, control, **kwargs):
+@api.check(2, 'Window/Control could not be found')
+def ControlShow(title, text, control):
     """
 
     :param title:
@@ -506,15 +373,11 @@ def control_show(title, control, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-
-    ret = AUTO_IT.AU3_ControlShow(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
+    ret = AUTO_IT.AU3_ControlShow(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control))
     return ret
 
-
-@api.check(2, "Window/Control could not be found")
-def control_show_by_handle(hwnd, h_ctrl):
+@api.check(2, 'Window/Control could not be found')
+def ControlShowByHandle(hwnd, h_ctrl):
     """
 
     :param hwnd:
@@ -524,9 +387,8 @@ def control_show_by_handle(hwnd, h_ctrl):
     ret = AUTO_IT.AU3_ControlShowByHandle(HWND(hwnd), HWND(h_ctrl))
     return ret
 
-
-@api.check(1, "Window/Control could not be found")
-def control_tree_view(title, control, command, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlTreeView(title, text, control, command, extra1='', extra2='', buf_size=256):
     """
 
     :param title:
@@ -536,22 +398,12 @@ def control_tree_view(title, control, command, **kwargs):
     :param kwargs:
     :return:
     """
-    text = kwargs.get("text", "")
-    buf_size = kwargs.get("buf_size", 256)
     result = ctypes.create_unicode_buffer(buf_size)
-    extra1 = kwargs.get("extras1", "")
-    extra2 = kwargs.get("extras2", "")
-
-    AUTO_IT.AU3_ControlTreeView(
-        LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(command),
-        LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size)
-    )
-
+    AUTO_IT.AU3_ControlTreeView(LPCWSTR(title), LPCWSTR(text), LPCWSTR(control), LPCWSTR(command), LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def control_tree_view_by_handle(hwnd, h_ctrl, command, **kwargs):
+@api.check(1, 'Window/Control could not be found')
+def ControlTreeViewByHandle(hwnd, h_ctrl, command, extra1='', extra2='', buf_size=256):
     """
 
     :param hwnd:
@@ -560,20 +412,12 @@ def control_tree_view_by_handle(hwnd, h_ctrl, command, **kwargs):
     :param kwargs:
     :return:
     """
-    extra1 = kwargs.get("extra1", "")
-    extra2 = kwargs.get("extra2", "")
-    buf_size = kwargs.get("buf_size", 256)
     result = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_ControlTreeViewByHandle(
-        HWND(hwnd), HWND(h_ctrl), LPCWSTR(command),
-        LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size)
-    )
+    AUTO_IT.AU3_ControlTreeViewByHandle(HWND(hwnd), HWND(h_ctrl), LPCWSTR(command), LPCWSTR(extra1), LPCWSTR(extra2), result, INT(buf_size))
     return result.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def statusbar_get_text(title, text="", part=1, buf_size=256):
+@api.check(1, 'Window/Control could not be found')
+def StatusbarGetText(title, text='', part=1, buf_size=256):
     """
 
     :param title:
@@ -585,16 +429,11 @@ def statusbar_get_text(title, text="", part=1, buf_size=256):
     :return:
     """
     sb_text = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_StatusbarGetText(
-        LPCWSTR(title), LPCWSTR(text), INT(part), sb_text, INT(buf_size)
-    )
-
+    AUTO_IT.AU3_StatusbarGetText(LPCWSTR(title), LPCWSTR(text), INT(part), sb_text, INT(buf_size))
     return sb_text.value.rstrip()
 
-
-@api.check(1, "Window/Control could not be found")
-def statusbar_get_text_by_handle(hwnd, part=1, buf_size=256):
+@api.check(1, 'Window/Control could not be found')
+def StatusbarGetTextByHandle(hwnd, part=1, buf_size=256):
     """
 
     :param hwnd:
@@ -603,9 +442,5 @@ def statusbar_get_text_by_handle(hwnd, part=1, buf_size=256):
     :return:
     """
     statusbar_text = ctypes.create_unicode_buffer(buf_size)
-
-    AUTO_IT.AU3_StatusbarGetTextByHandle(
-        HWND(hwnd), INT(part), statusbar_text, INT(buf_size)
-    )
-
+    AUTO_IT.AU3_StatusbarGetTextByHandle(HWND(hwnd), INT(part), statusbar_text, INT(buf_size))
     return statusbar_text.value.rstrip()

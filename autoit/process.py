@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'Jace Xu'
-
 from .autoit import AUTO_IT
-from .autoit import api, error
+from .autoit import api, Error
 from .autoit import Properties
 from .autoit import AutoItError
 from ctypes.wintypes import *
 
-
-@api.check(1, "run program failed")
-def run(filename, work_dir="", show_flag=Properties.SW_SHOWNORMAL):
+@api.check(1, 'run program failed')
+def Run(filename, work_dir='', show_flag=Properties.SW_SHOWNORMAL):
     """
 
     :param filename:
@@ -18,13 +15,11 @@ def run(filename, work_dir="", show_flag=Properties.SW_SHOWNORMAL):
     :param show_flag:
     :return:
     """
-    ret = AUTO_IT.AU3_Run(LPCWSTR(filename), LPCWSTR(work_dir),
-                          INT(show_flag))
+    ret = AUTO_IT.AU3_Run(LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag))
     return ret
 
-
-@api.check(1, "run program failed")
-def run_wait(filename, work_dir="", show_flag=Properties.SW_SHOWNORMAL):
+@api.check(1, 'run program failed')
+def RunWait(filename, work_dir='', show_flag=Properties.SW_SHOWNORMAL):
     """
 
     :param filename:
@@ -32,20 +27,17 @@ def run_wait(filename, work_dir="", show_flag=Properties.SW_SHOWNORMAL):
     :param show_flag:
     :return:
     """
-    ret = AUTO_IT.AU3_RunWait(LPCWSTR(filename), LPCWSTR(work_dir),
-                              INT(show_flag))
+    ret = AUTO_IT.AU3_RunWait(LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag))
     return ret
 
-
-def process_close(process):
+def ProcessClose(process):
     """
     Terminates a named process.
     """
     ret = AUTO_IT.AU3_ProcessClose(LPCWSTR(process))
     return ret
 
-
-def process_exists(process):
+def ProcessExists(process):
     """
 
     :param process:
@@ -54,8 +46,7 @@ def process_exists(process):
     ret = AUTO_IT.AU3_ProcessExists(LPCWSTR(process))
     return ret
 
-
-def process_set_priority(process, priority):
+def ProcessSetPriority(process, priority):
     """
     Changes the priority of a process
     :param process: The name or PID of the process to check.
@@ -70,15 +61,14 @@ def process_set_priority(process, priority):
     """
     ret = AUTO_IT.AU3_ProcessSetPriority(LPCWSTR(process), INT(priority))
     if ret == 0:
-        if error() == 1:
-            raise AutoItError("set priority failed")
-        elif error() == 2:
-            raise AutoItError("unsupported priority class be used")
+        if Error() == 1:
+            raise AutoItError('set priority failed')
+        elif Error() == 2:
+            raise AutoItError('unsupported priority class be used')
     return ret
 
-
-@api.check(2, "the process wait timed out")
-def process_wait(process, timeout=0):
+@api.check(2, 'the process wait timed out')
+def ProcessWait(process, timeout=0):
     """
     Pauses script execution until a given process exists.
     :param process:
@@ -88,9 +78,8 @@ def process_wait(process, timeout=0):
     ret = AUTO_IT.AU3_ProcessWait(LPCWSTR(process), INT(timeout))
     return ret
 
-
-@api.check(2, "the process wait close timed out")
-def process_wait_close(process, timeout=0):
+@api.check(2, 'the process wait close timed out')
+def ProcessWaitClose(process, timeout=0):
     """
     Pauses script execution until a given process does not exist.
     :param process:
@@ -100,10 +89,8 @@ def process_wait_close(process, timeout=0):
     ret = AUTO_IT.AU3_ProcessWaitClose(LPCWSTR(process), INT(timeout))
     return ret
 
-
-@api.check(1, "run an external program failed")
-def run_as(user, domain, password, filename, logon_flag=1, work_dir="",
-           show_flag=Properties.SW_SHOWNORMAL):
+@api.check(1, 'run an external program failed')
+def RunAs(user, domain, password, logon_flag=1, filename='', work_dir='', show_flag=Properties.SW_SHOWNORMAL):
     """
     Runs an external program.
     :param user: username The user name to use.
@@ -119,16 +106,11 @@ def run_as(user, domain, password, filename, logon_flag=1, work_dir="",
         SW_MAXIMIZE = Maximized window
     :return:
     """
-    ret = AUTO_IT.AU3_RunAs(
-        LPCWSTR(user), LPCWSTR(domain), LPCWSTR(password), INT(logon_flag),
-        LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag)
-    )
+    ret = AUTO_IT.AU3_RunAs(LPCWSTR(user), LPCWSTR(domain), LPCWSTR(password), INT(logon_flag), LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag))
     return ret
 
-
-@api.check(1, "run an external program failed")
-def run_as_wait(user, domain, password, filename, logon_flag=1, work_dir="",
-                show_flag=Properties.SW_SHOWNORMAL):
+@api.check(1, 'run an external program failed')
+def RunAsWait(user, domain, password, logon_flag=1, filename='', work_dir='', show_flag=Properties.SW_SHOWNORMAL):
     """
     Runs an external program.
     :param user: username The user name to use.
@@ -144,15 +126,11 @@ def run_as_wait(user, domain, password, filename, logon_flag=1, work_dir="",
         SW_MAXIMIZE = Maximized window
     :return:
     """
-    ret = AUTO_IT.AU3_RunAsWait(
-        LPCWSTR(user), LPCWSTR(domain), LPCWSTR(password), INT(logon_flag),
-        LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag)
-    )
+    ret = AUTO_IT.AU3_RunAsWait(LPCWSTR(user), LPCWSTR(domain), LPCWSTR(password), INT(logon_flag), LPCWSTR(filename), LPCWSTR(work_dir), INT(show_flag))
     return ret
 
-
-@api.check(2, "set shutdown failed")
-def shutdown(code):
+@api.check(2, 'set shutdown failed')
+def Shutdown(code):
     """
 
     :param code: The shutdown code is a combination of the following values:

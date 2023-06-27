@@ -32,7 +32,7 @@ class AutoItError(Exception):
     pass
 
 
-def error():
+def Error():
     return AUTO_IT.AU3_error()
 
 
@@ -43,7 +43,7 @@ class AutoItAPI(object):
 
     @staticmethod
     def _has_error():
-        return True if error() == 1 else False
+        return True if Error() == 1 else False
 
     @staticmethod
     def _has_unexpected_ret(ret, unexpected):
@@ -61,11 +61,13 @@ class AutoItAPI(object):
     def check(self, mark=0, err_msg="", **kwds):
         """
         :param mark:
-            0 - do not need check return value or error()
-            1 - check error()
+            0 - do not need check return value or Error()
+            1 - check Error()
             2 - check return value
         """
         unexpected_ret = kwds.get("unexpected_ret", (0,))
+
+                      
 
         def _check(fn):
             @wraps(fn)
@@ -92,7 +94,7 @@ api = AutoItAPI()
 
 
 @api.check()
-def auto_it_set_option(option, param):
+def AutoItSetOption(option, param):
     """
     Changes the operation of various AutoIt functions/parameters
     :param option: The option to change
@@ -141,140 +143,139 @@ class _Options(object):
         self._win_wait_delay = 250
 
     @property
-    def caret_coord_mode(self):
+    def CaretCoordMode(self):
         return self._caret_coord_mode
 
-    @caret_coord_mode.setter
-    def caret_coord_mode(self, value):
-        auto_it_set_option("CaretCoordMode", value)
+    @CaretCoordMode.setter
+    def CaretCoordMode(self, value):
+        auto_it_set_option('CaretCoordMode', value)
         self._caret_coord_mode = value
 
     @property
-    def mouse_click_delay(self):
+    def MouseClickDelay(self):
         return self._mouse_click_delay
 
-    @mouse_click_delay.setter
-    def mouse_click_delay(self, value):
-        auto_it_set_option("MouseClickDelay", value)
+    @MouseClickDelay.setter
+    def MouseClickDelay(self, value):
+        auto_it_set_option('MouseClickDelay', value)
         self._mouse_click_delay = value
 
     @property
-    def mouse_click_down_delay(self):
+    def MouseClickDownDelay(self):
         return self._mouse_click_down_delay
 
-    @mouse_click_down_delay.setter
-    def mouse_click_down_delay(self, value):
-        auto_it_set_option("MouseClickDownDelay", value)
+    @MouseClickDownDelay.setter
+    def MouseClickDownDelay(self, value):
+        auto_it_set_option('MouseClickDownDelay', value)
         self._mouse_click_down_delay = value
 
     @property
-    def mouse_click_drag_delay(self):
+    def MouseClickDragDelay(self):
         return self._mouse_click_drag_delay
 
-    @mouse_click_drag_delay.setter
-    def mouse_click_drag_delay(self, value):
-        auto_it_set_option("MouseClickDragDelay", value)
+    @MouseClickDragDelay.setter
+    def MouseClickDragDelay(self, value):
+        auto_it_set_option('MouseClickDragDelay', value)
         self._mouse_click_drag_delay = value
 
     @property
-    def mouse_coord_mode(self):
+    def MouseCoordMode(self):
         return self._mouse_coord_mode
 
-    @mouse_coord_mode.setter
-    def mouse_coord_mode(self, value):
-        auto_it_set_option("MouseCoordMode", value)
+    @MouseCoordMode.setter
+    def MouseCoordMode(self, value):
+        auto_it_set_option('MouseCoordMode', value)
         self._mouse_coord_mode = value
 
     @property
-    def pixel_coord_mode(self):
+    def PixelCoordMode(self):
         return self._pixel_coord_mode
 
-    @pixel_coord_mode.setter
-    def pixel_coord_mode(self, value):
-        auto_it_set_option("PixelCoordMode", value)
+    @PixelCoordMode.setter
+    def PixelCoordMode(self, value):
+        auto_it_set_option('PixelCoordMode', value)
         self._pixel_coord_mode = value
 
     @property
-    def send_attach_mode(self):
+    def SendAttachMode(self):
         return self._send_attach_mode
 
-    @send_attach_mode.setter
-    def send_attach_mode(self, value):
-        auto_it_set_option("SendAttachMode", INT(value))
+    @SendAttachMode.setter
+    def SendAttachMode(self, value):
+        auto_it_set_option('SendAttachMode', INT(value))
         self._send_attach_mode = value
 
     @property
-    def send_capslock_mode(self):
+    def SendCapslockMode(self):
         return self._send_capslock_mode
 
-    @send_capslock_mode.setter
-    def send_capslock_mode(self, value):
-        auto_it_set_option("SendCapslockMode", value)
+    @SendCapslockMode.setter
+    def SendCapslockMode(self, value):
+        auto_it_set_option('SendCapslockMode', value)
         self._send_capslock_mode = value
 
     @property
-    def send_key_delay(self):
+    def SendKeyDelay(self):
         return self._send_key_delay
 
-    @send_key_delay.setter
-    def send_key_delay(self, value):
-        auto_it_set_option("SendKeyDelay", value)
+    @SendKeyDelay.setter
+    def SendKeyDelay(self, value):
+        auto_it_set_option('SendKeyDelay', value)
         self._send_key_delay = value
 
     @property
-    def send_key_down_delay(self):
+    def SendKeyDownDelay(self):
         return self._send_key_down_delay
 
-    @send_key_down_delay.setter
-    def send_key_down_delay(self, value):
-        auto_it_set_option("SendKeyDownDelay", value)
+    @SendKeyDownDelay.setter
+    def SendKeyDownDelay(self, value):
+        auto_it_set_option('SendKeyDownDelay', value)
         self._send_key_down_delay = value
 
     @property
-    def win_detect_hidden_text(self):
+    def WinDetectHiddenText(self):
         return self._win_detect_hidden_text
 
-    @win_detect_hidden_text.setter
-    def win_detect_hidden_text(self, value):
-        auto_it_set_option("WinDetectHiddenText", value)
+    @WinDetectHiddenText.setter
+    def WinDetectHiddenText(self, value):
+        auto_it_set_option('WinDetectHiddenText', value)
         self._win_detect_hidden_text = value
 
     @property
-    def win_search_children(self):
+    def WinSearchChildren(self):
         return self._win_search_children
 
-    @win_search_children.setter
-    def win_search_children(self, value):
-        auto_it_set_option("WinSearchChildren", value)
+    @WinSearchChildren.setter
+    def WinSearchChildren(self, value):
+        auto_it_set_option('WinSearchChildren', value)
         self._win_search_children = value
 
     @property
-    def win_text_match_mode(self):
+    def WinTextMatchMode(self):
         return self._win_text_match_mode
 
-    @win_text_match_mode.setter
-    def win_text_match_mode(self, value):
-        auto_it_set_option("WinTextMatchMode", value)
+    @WinTextMatchMode.setter
+    def WinTextMatchMode(self, value):
+        auto_it_set_option('WinTextMatchMode', value)
         self._win_text_match_mode = value
 
     @property
-    def win_title_match_mode(self):
+    def WinTitleMatchMode(self):
         return self._win_title_match_mode
 
-    @win_title_match_mode.setter
-    def win_title_match_mode(self, value):
-        auto_it_set_option("WinTitleMatchMode", value)
+    @WinTitleMatchMode.setter
+    def WinTitleMatchMode(self, value):
+        auto_it_set_option('WinTitleMatchMode', value)
         self._win_title_match_mode = value
 
     @property
-    def win_wait_delay(self):
+    def WinWaitDelay(self):
         return self._win_wait_delay
 
-    @win_wait_delay.setter
-    def win_wait_delay(self, value):
-        auto_it_set_option("WinWaitDelay", value)
+    @WinWaitDelay.setter
+    def WinWaitDelay(self, value):
+        auto_it_set_option('WinWaitDelay', value)
         self._win_wait_delay = value
-
 
 class Commands(object):
 
@@ -315,28 +316,24 @@ class Commands(object):
     exists = "Exists"
     expand = "Expand"
     uncheck = "Uncheck"
-
 options = _Options()
 properties = Properties
 commands = Commands
 INTDEFAULT = -2147483647
 
-
-@api.check(1, err_msg="clipboard is empty or contains a non-text entry")
-def clip_get(buf_size=256):
+@api.check(1, err_msg='clipboard is empty or contains a non-text entry')
+def ClipGet(buf_size=256):
     """
 
     :param buf_size:
     :return:
     """
-
     clip = ctypes.create_unicode_buffer(buf_size)
     AUTO_IT.AU3_ClipGet(clip, INT(buf_size))
     return clip.value.rstrip()
 
-
-@api.check(2, err_msg="Write text to clipboard failed")
-def clip_put(value):
+@api.check(2, err_msg='Write text to clipboard failed')
+def ClipPut(value):
     """
 
     :param value:
@@ -345,8 +342,7 @@ def clip_put(value):
     ret = AUTO_IT.AU3_ClipPut(LPCWSTR(value))
     return ret
 
-
-def is_admin():
+def IsAdmin():
     """
 
     :return:
@@ -354,8 +350,7 @@ def is_admin():
     ret = AUTO_IT.AU3_IsAdmin()
     return ret
 
-
-def drive_map_add(device, share, flag=0, user="", pwd="", buf_size=256):
+def DriveMapAdd(device, share, flag=0, user='', pwd='', buf_size=256):
     """
 
     :param device:
@@ -381,14 +376,12 @@ def drive_map_add(device, share, flag=0, user="", pwd="", buf_size=256):
     AUTO_IT.AU3_DriveMapAdd(
         LPCWSTR(device), LPCWSTR(share), INT(flag), LPCWSTR(user),
         LPCWSTR(pwd), result, INT(buf_size))
-
-    if error():
-        raise AutoItError(err_code.get(error(), None))
+    if Error():
+        raise AutoItError(err_code.get(Error(), None))
     return result.value.rstrip()
 
-
-@api.check(2, err_msg="the disconnection was unsuccessful")
-def drive_map_del(device):
+@api.check(2, err_msg='the disconnection was unsuccessful')
+def DriveMapDel(device):
     """
 
     :param device:
@@ -397,9 +390,8 @@ def drive_map_del(device):
     ret = AUTO_IT.AU3_DriveMapDel(LPCWSTR(device))
     return ret
 
-
-@api.check(1, err_msg="get the details of a mapped drive failed")
-def drive_map_get(device, buf_size=256):
+@api.check(1, err_msg='get the details of a mapped drive failed')
+def DriveMapGet(device, buf_size=256):
     """
 
     :param device:
@@ -410,8 +402,7 @@ def drive_map_get(device, buf_size=256):
     AUTO_IT.AU3_DriveMapGet(LPCWSTR(device), mapping, INT(buf_size))
     return mapping.value.rstrip()
 
-
-def mouse_click(button="left", x=INTDEFAULT, y=INTDEFAULT, clicks=1, speed=-1):
+def MouseClick(button='left', x=INTDEFAULT, y=INTDEFAULT, clicks=1, speed=-1):
     """
 
     :param button:
@@ -421,13 +412,10 @@ def mouse_click(button="left", x=INTDEFAULT, y=INTDEFAULT, clicks=1, speed=-1):
     :param speed:
     :return:
     """
-    ret = AUTO_IT.AU3_MouseClick(
-        LPCWSTR(button), INT(x), INT(y), INT(clicks), INT(speed)
-    )
+    ret = AUTO_IT.AU3_MouseClick(LPCWSTR(button), INT(x), INT(y), INT(clicks), INT(speed))
     return ret
 
-
-def mouse_click_drag(x1, y1, x2, y2, button="left", speed=-1):
+def MouseClickDrag(x1, y1, x2, y2, button='left', speed=-1):
     """
 
     :param x1:
@@ -444,8 +432,7 @@ def mouse_click_drag(x1, y1, x2, y2, button="left", speed=-1):
     )
     return ret
 
-
-def mouse_down(button="left"):
+def MouseDown(button='left'):
     """
 
     :param button:
@@ -453,8 +440,7 @@ def mouse_down(button="left"):
     """
     AUTO_IT.AU3_MouseDown(LPCWSTR(button))
 
-
-def mouse_get_cursor():
+def MouseGetCursor():
     """
 
     :return:
@@ -462,8 +448,7 @@ def mouse_get_cursor():
     ret = AUTO_IT.AU3_MouseGetCursor()
     return ret
 
-
-def mouse_get_pos():
+def MouseGetPos():
     """
 
     :return:
@@ -472,8 +457,7 @@ def mouse_get_pos():
     AUTO_IT.AU3_MouseGetPos(ctypes.byref(p))
     return p.x, p.y
 
-
-def mouse_move(x, y, speed=-1):
+def MouseMove(x, y, speed=-1):
     """
 
     :param x:
@@ -484,8 +468,7 @@ def mouse_move(x, y, speed=-1):
     ret = AUTO_IT.AU3_MouseMove(INT(x), INT(y), INT(speed))
     return ret
 
-
-def mouse_up(button="left"):
+def MouseUp(button='left'):
     """
 
     :param button:
@@ -493,9 +476,8 @@ def mouse_up(button="left"):
     """
     AUTO_IT.AU3_MouseUp(LPCWSTR(button))
 
-
-@api.check(1, err_msg="the direction is not recognized")
-def mouse_wheel(direction, clicks=-1):
+@api.check(1, err_msg='the direction is not recognized')
+def MouseWheel(direction, clicks=-1):
     """
 
     :param direction: "up" or "down"
@@ -504,8 +486,7 @@ def mouse_wheel(direction, clicks=-1):
     """
     AUTO_IT.AU3_MouseWheel(LPCWSTR(direction), INT(clicks))
 
-
-def opt(option, value):
+def Opt(option, value):
     """
 
     :param option:
@@ -514,8 +495,7 @@ def opt(option, value):
     """
     return auto_it_set_option(option, value)
 
-
-def pixel_checksum(left, top, right, bottom, step=1):
+def PixelChecksum(left, top, right, bottom, step=1):
     """
 
     :param left:
@@ -529,9 +509,8 @@ def pixel_checksum(left, top, right, bottom, step=1):
     ret = AUTO_IT.AU3_PixelChecksum(ctypes.byref(rect), INT(step))
     return ret
 
-
-@api.check(2, unexpected_ret=(-1,), err_msg="invalid coordinates")
-def pixel_get_color(x, y):
+@api.check(2, unexpected_ret=(-1,), err_msg='invalid coordinates')
+def PixelGetColor(x, y):
     """
 
     :param x:
@@ -541,9 +520,8 @@ def pixel_get_color(x, y):
     ret = AUTO_IT.AU3_PixelGetColor(INT(x), INT(y))
     return ret
 
-
-@api.check(1, err_msg="color is not found")
-def pixel_search(left, top, right, bottom, col, var=1, step=1):
+@api.check(1, err_msg='color is not found')
+def PixelSearch(left, top, right, bottom, col, var=1, step=1):
     """
 
     :param left:
@@ -557,14 +535,15 @@ def pixel_search(left, top, right, bottom, col, var=1, step=1):
     """
     p = POINT()
     rect = RECT(left, top, right, bottom)
+                                                                                               
+                     
 
     AUTO_IT.AU3_PixelSearch(
         ctypes.byref(rect), INT(col), INT(var), INT(step), ctypes.byref(p)
     )
     return p.x, p.y
 
-
-def send(send_text, mode=0):
+def Send(send_text, mode=0):
     """
     Sends simulated keystrokes to the active window.
     :param send_text:
@@ -576,8 +555,7 @@ def send(send_text, mode=0):
     """
     AUTO_IT.AU3_Send(LPCWSTR(send_text), INT(mode))
 
-
-def tooltip(tip, x=INTDEFAULT, y=INTDEFAULT):
+def Tooltip(tip, x=INTDEFAULT, y=INTDEFAULT):
     """
 
     :param tip:
